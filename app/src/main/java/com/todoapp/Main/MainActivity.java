@@ -13,6 +13,7 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.todoapp.DBHelper;
 import com.todoapp.Fragment.Calendar.CalendarFragment;
 import com.todoapp.Fragment.Home.HomeFragment;
 import com.todoapp.Fragment.Setting.SettingFragment;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
 
     Fragment homefragment,calendarfragment,settingfragment;
+    DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void init(){
+
+        dbHelper = new DBHelper(MainActivity.this);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
