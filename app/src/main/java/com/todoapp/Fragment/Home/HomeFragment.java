@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.todoapp.DBHelper;
 import com.todoapp.Fragment.Home.adpter.Adpter_TodoList;
+import com.todoapp.Fragment.Home.model.AddTodoModel;
 import com.todoapp.Main.MainActivity;
 import com.todoapp.R;
 
@@ -26,11 +28,13 @@ public class HomeFragment extends Fragment implements Adpter_TodoList.TodoOnclic
 
     RecyclerView recyclerView;
     View v;
-    ArrayList<String> tsk_name;
+    ArrayList<AddTodoModel> addTodoName;
     AppCompatImageView addTodo;
     AppCompatButton submitAddTodo;
     TextInputEditText edtAddTodo;
     DBHelper dbHelper;
+    AppCompatTextView txt_n;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -42,14 +46,21 @@ public class HomeFragment extends Fragment implements Adpter_TodoList.TodoOnclic
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_home, container, false);
 
-        tsk_name = new ArrayList<>();
-        for(int i=0;i<2;i++){
-            tsk_name.add("Task "+i);
-        }
+        config();
         findById();
-        setAdapter(tsk_name);
-
+//        if(addTodoName.size() >0){
+            setAdapter(addTodoName);
+//        }
+//        else {
+//            txt_n = v.findViewById(R.id.txt_n);
+//            txt_n.setVisibility(View.VISIBLE);
+//        }
         return v;
+    }
+    void config(){
+        addTodoName = new ArrayList<>();
+        dbHelper = new DBHelper(getContext());
+        addTodoName =dbHelper.readTodoList();
     }
 
     void findById(){
@@ -72,16 +83,17 @@ public class HomeFragment extends Fragment implements Adpter_TodoList.TodoOnclic
         submitAddTodo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbHelper = new DBHelper(getContext());
                 dbHelper.addTodoList(edtAddTodo.getText()+"");
+                config();
+                setAdapter(addTodoName);
                 dialog.hide();
             }
         });
         dialog.show();
     }
 
-    void setAdapter(ArrayList<String> tsk_name){
-        Adpter_TodoList adpter_todoList = new Adpter_TodoList(getContext(),tsk_name,this);
+    void setAdapter(ArrayList<AddTodoModel> addTodoName){
+        Adpter_TodoList adpter_todoList = new Adpter_TodoList(getContext(),addTodoName,this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adpter_todoList);
@@ -90,7 +102,7 @@ public class HomeFragment extends Fragment implements Adpter_TodoList.TodoOnclic
     @Override
     public void TodoOnclick(int position) {
         Toast.makeText(getContext(), "position"+position, Toast.LENGTH_SHORT).show();
-        tsk_name.remove(position);
-        setAdapter(tsk_name);
+        addTodoName.remove(position);
+        setAdapter(addTodoName);
     }
 }

@@ -11,8 +11,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/addTodo"
@@ -22,5 +21,18 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_n"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Data"
+            android:visibility="gone"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </RelativeLayout>

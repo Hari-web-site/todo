@@ -11,7 +11,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.todoapp.Fragment.Home.HomeFragment;
+import com.todoapp.Fragment.Home.model.AddTodoModel;
 import com.todoapp.R;
 
 import java.util.ArrayList;
@@ -19,13 +19,13 @@ import java.util.ArrayList;
 public class Adpter_TodoList extends RecyclerView.Adapter<Adpter_TodoList.ViewHolder> {
 
     Context context;
-    ArrayList<String> tsk_name;
     TodoOnclickListener todoOnclickListener;
+    ArrayList<AddTodoModel> addTodoName;
 
 
-    public Adpter_TodoList(Context context, ArrayList<String> tsk_name, TodoOnclickListener todoOnclickListener) {
+    public Adpter_TodoList(Context context, ArrayList<AddTodoModel> addTodoName, TodoOnclickListener todoOnclickListener) {
         this.context = context;
-        this.tsk_name = tsk_name;
+        this.addTodoName = addTodoName;
         this.todoOnclickListener = todoOnclickListener;
     }
 
@@ -38,7 +38,7 @@ public class Adpter_TodoList extends RecyclerView.Adapter<Adpter_TodoList.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull Adpter_TodoList.ViewHolder holder, int position) {
-        holder.tsk_name.setText(tsk_name.get(position));
+        holder.tsk_name.setText(addTodoName.get(position).getTitle());
         holder.linearLayoutCompat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,7 +50,7 @@ public class Adpter_TodoList extends RecyclerView.Adapter<Adpter_TodoList.ViewHo
 
     @Override
     public int getItemCount() {
-        return tsk_name.size();
+        return addTodoName.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
